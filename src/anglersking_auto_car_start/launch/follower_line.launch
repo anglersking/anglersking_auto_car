@@ -1,0 +1,14 @@
+<launch>
+
+
+  <!-- camera image read and publish -->
+  <node pkg="track_detection" type="imageRead_node" name="publish_image" output="screen" />
+
+  <node pkg="anglersking_auto_car_start" type="follower_line.py" name="line_follower" output="screen">
+  	<param name="forward_velocity"     type="double" value="0.0"/>
+  	<param name="scale_diversion"      type="double" value="0.4"/>
+  </node>
+
+</launch>
+
+
