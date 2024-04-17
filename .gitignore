@@ -2,3 +2,6 @@
 .devel
 .catkin*
 .build/*
+./build
+build
+devel
