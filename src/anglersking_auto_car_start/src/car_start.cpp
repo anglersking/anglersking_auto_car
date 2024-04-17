@@ -51,10 +51,10 @@ Car_start_object::Car_start_object()
          Robot_Serial.open();
     }
 	catch (serial::IOException& e){
-		 ROS_ERROR_STREAM("[ZHOUXUEWEI] Unable to open port ");
+		 ROS_ERROR_STREAM("[ANGLERSKING] Unable to open port ");
 	}
 	if(Robot_Serial.isOpen()){
-	 	ROS_INFO_STREAM("[ZHOUXUEWEI] Serial Port opened");
+	 	ROS_INFO_STREAM("[ANGLERSKING] Serial Port opened");
 	}else{
 	}
 }
@@ -198,7 +198,7 @@ bool Car_start_object::ReadFormUart()
 		}
 	} 
 	Robot_Serial.read(CheckSumBuffer,sizeof(CheckSumBuffer));
-	//ROS_INFO("[ZHOUXUEWEI] Get base controller data error!");
+	//ROS_INFO("[ANGLERSKING] Get base controller data error!");
 	return false;
 }
 
@@ -437,7 +437,7 @@ int main(int argc, char** argv)
 	/* Voltage thread fb*/
 
 	ros::init(argc, argv, "base_controller");
-	ROS_INFO("[ZHOUXUEWEI] base controller node start! ");
+	ROS_INFO("[ANGLERSKING] base controller node start! ");
 
 	Car_start_object Robot_Control; 
 	Robot_Control.ReadAndWriteLoopProcess();

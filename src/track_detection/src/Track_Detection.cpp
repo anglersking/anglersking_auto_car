@@ -186,7 +186,7 @@ int main(int argc, char** argv)
 {
  
     ros::init(argc, argv, "HiBot_track_detection");
-    ROS_INFO("[ZHOUXUEWEI] Track_Detection_node start!");
+    ROS_INFO("[ANGLERSKING] Track_Detection_node start!");
 
     Track_Detection HiBotTrackDetection;
 
