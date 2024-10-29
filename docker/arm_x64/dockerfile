@@ -1,4 +1,4 @@
-FROM ros:melodic
+FROM anglersking/auto_car:arm64
 RUN apt-get update && apt-get -y upgrade
 RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 RUN /bin/bash -c "source ~/.bashrc"
@@ -8,5 +8,15 @@ RUN apt-get install -y ros-melodic-serial  ros-melodic-tf ros-melodic-urdf ros-m
     ros-melodic-tf2-sensor-msgs ros-melodic-move-base-msgs ros-melodic-costmap-converter ros-melodic-mbf-costmap-core ros-melodic-interactive-markers \
     ros-melodic-mbf-msgs ros-melodic-tf2-eigen ros-melodic-libg2o ros-melodic-ecl-threads
 RUN apt-get install -y libbullet-dev libsdl-dev  libsdl-image1.2-dev libyaml-cpp-dev libopencv-dev libcv-bridge-dev libsuitesparse-dev 
-# RUN cd /auto_car && /opt/ros/melodic/bin/catkin_make
-    
+RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc" 
+ENV ROS_ROOT=/opt/ros/melodic/share/ros
+ENV PATH=/opt/ros/melodic/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PYTHONPATH=/opt/ros/melodic/lib/python2.7/dist-packages
+ENV CMAKE_PREFIX_PATH=/opt/ros/melodic
+ENV LD_LIBRARY_PATH=/opt/ros/melodic/lib
+ENV ROS_ETC_DIR=/opt/ros/melodic/etc/ros
+ENV PKG_CONFIG_PATH=/opt/ros/melodic/lib/pkgconfig
+
+#RUN cd /auto_car &&  catkin_make -j2
+ 
