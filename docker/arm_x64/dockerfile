@@ -1,8 +1,19 @@
-FROM anglersking/auto_car:arm64
+FROM ros:melodic
+# 替换为清华源
+RUN apt update 
+RUN apt install -y curl
+COPY ./docker/arm_x64/chsrc-aarch64-linux /
+RUN chmod a+x /chsrc-aarch64-linux
+RUN /chsrc-aarch64-linux set ubuntu
 RUN apt-get update && apt-get -y upgrade
 RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 RUN /bin/bash -c "source ~/.bashrc"
 COPY  ./src /auto_car/src
+RUN sed -i 's@http://ports.ubuntu.com/@http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/@g' /etc/apt/sources.list \
+    && echo "deb http://mirrors.tuna.tsinghua.edu.cn/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list \
+    && apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-keys F42ED6FBAB17C654 \
+    && apt-get update \
+    && apt-get -y upgrade
 RUN apt-get install -y ros-melodic-serial  ros-melodic-tf ros-melodic-urdf ros-melodic-diagnostic-updater   ros-melodic-tf2-geometry-msgs  ros-melodic-bfl \
     ros-melodic-angles ros-melodic-cv-bridge ros-melodic-image-transport  ros-melodic-joy ros-melodic-xacro ros-melodic-laser-geometry ros-melodic-map-msgs \
     ros-melodic-tf2-sensor-msgs ros-melodic-move-base-msgs ros-melodic-costmap-converter ros-melodic-mbf-costmap-core ros-melodic-interactive-markers \
@@ -18,5 +29,8 @@ ENV LD_LIBRARY_PATH=/opt/ros/melodic/lib
 ENV ROS_ETC_DIR=/opt/ros/melodic/etc/ros
 ENV PKG_CONFIG_PATH=/opt/ros/melodic/lib/pkgconfig
 
-#RUN cd /auto_car &&  catkin_make -j2
- 
+COPY ./docker/arm_x64/build_car.sh /build_car.sh
+RUN chmod a+x /build_car.sh
+RUN cd /auto_car/src/hibot_follower && mkdir include 
+RUN ./build_car.sh
+
